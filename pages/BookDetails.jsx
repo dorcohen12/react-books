@@ -1,3 +1,4 @@
+import { LongTxt } from "../cmps/LongTxt.jsx"
 import { BookService } from "../services/book.service.js"
 
 const { useEffect, useState } = React
@@ -56,7 +57,7 @@ export function BookDetails() {
             <h6>{book.subtitle}</h6>
             <strong>{renderPublishedDate(book.publishedDate)}</strong>
             <strong>{renderPageCount(book.pageCount)}</strong>
-            <p>{book.description}</p>
+            <LongTxt txt={book.description} length="100" />
             <strong className={`${isSaleClass} ${isExpensivePrice}`}>{`${book.listPrice.amount} ${book.listPrice.currencyCode}`}</strong>
             <strong>Authors</strong>
             <ul>
