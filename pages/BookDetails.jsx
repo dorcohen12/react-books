@@ -1,10 +1,10 @@
-import { carService } from "../services/car.service.js"
+import { bookService } from "../services/book.service.js"
 
 const { useEffect, useState } = React
 const { useParams, useNavigate, Link } = ReactRouterDOM
 
 
-export function CarDetails() {
+export function BookDetails() {
     const [car, setCar] = useState(null)
     const params = useParams()
     const navigate = useNavigate()
@@ -14,7 +14,7 @@ export function CarDetails() {
     }, [params.carId])
 
     function loadCar() {
-        carService.get(params.carId)
+        bookService.get(params.carId)
             .then(setCar)
             .catch(err => {
                 console.log('Problem getting car', err);
