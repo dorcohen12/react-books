@@ -1,0 +1,54 @@
+section.add-book {
+    padding: 80px 0;
+    text-align: center;
+    font-size: 2vw;
+}
+
+.book-list {
+    list-style: none;
+    padding: 15px 0 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.book-list li {
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: var(--clr1bg);
+    padding-block: 0.2em;
+    padding: 1rem;
+    justify-content: space-between;
+    text-align: center;
+
+    ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        li {
+            padding: 0;
+            background: unset;
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+.sale {
+	position: relative;
+}
+
+.sale:before {
+    content: 'SALE';
+    background: gold;
+    position: absolute;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    top: -10px;
+}

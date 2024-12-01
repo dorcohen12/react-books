@@ -1,3 +1,4 @@
+import { BookFilter } from "../cmps/BookFilter.jsx"
 import { BookList } from "../cmps/BookList.jsx"
 import { BookService } from "../services/book.service.js"
 
@@ -9,8 +10,6 @@ const { useEffect, useState } = React
 export function BookIndex() {
     const [books, setBooks] = useState(null)
     const [filterBy, setFilterBy] = useState(BookService.getDefaultFilter())
-
-    // console.log('cars:', cars)
 
     useEffect(() => {
         loadBooks()
@@ -44,9 +43,12 @@ export function BookIndex() {
     return (
         <section className="book-index">
             
-            <section>
-                <Link to="/book/edit">Add Book</Link>
+            <section className="add-book">
+                <Link to="/book/edit" className="text-dark">Add Book</Link>
             </section>
+
+            <BookFilter defaultFilter={filterBy} onSetFilter={onSetFilter} />
+
             <BookList
                 books={books}
                 onRemoveBook={onRemoveBook}

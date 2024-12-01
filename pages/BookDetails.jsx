@@ -1,45 +1,81 @@
-import { bookService } from "../services/book.service.js"
+import { BookService } from "../services/book.service.js"
 
 const { useEffect, useState } = React
 const { useParams, useNavigate, Link } = ReactRouterDOM
 
 
 export function BookDetails() {
-    const [car, setCar] = useState(null)
+    const [book, setBook] = useState(null)
     const params = useParams()
     const navigate = useNavigate()
 
     useEffect(() => {
-        loadCar()
-    }, [params.carId])
+        loadBook()
+    }, [params.bookId])
 
-    function loadCar() {
-        bookService.get(params.carId)
-            .then(setCar)
+    function loadBook() {
+        BookService.get(params.bookId)
+            .then(setBook)
             .catch(err => {
-                console.log('Problem getting car', err);
+                console.log('Problem getting book', err);
             })
     }
 
     function onBack() {
-        navigate('/car')
+        navigate('/book')
         // navigate(-1)
     }
 
-    // console.log('car:', car)
+    // console.log('book:', book)
     console.log('Render');
 
-    if (!car) return <div>Details Loading...</div>
+    if (!book) return <div>Details Loading...</div>
+
+    var isSaleClass = (book.listPrice.isOnSale ? 'sale' : '');
+
+    var isExpensivePrice = (book.listPrice.amount > 150 ? 'red' : 'green');
+
+    function renderPageCount(pageCount) {
+        if(pageCount > 500) {
+            return 'Serious Reading'
+        } else if(pageCount > 200) {
+            return 'Descent Reading'
+        } else {
+            return 'Light Reading'
+        }
+    }
+    function renderPublishedDate(publishedDate) {
+        if(((new Date().getFullYear()) - publishedDate) > 10) {
+            return 'Vintage';
+        }
+        return 'New';
+    }
     return (
-        <section className="car-details">
-            <h1>Car Vendor: {car.vendor}</h1>
-            <h1>Car Speed: {car.speed}</h1>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis quae fuga eveniet, quisquam ducimus modi optio in alias accusantium corrupti veritatis commodi tenetur voluptate deserunt nihil quibusdam. Expedita, architecto omnis?</p>
-            <img src={`../assets/img/${car.vendor}.png`} alt="car-image" />
+        <section className="book-details">
+            <h1>book title: {book.title}</h1>
+            <h6>{book.subtitle}</h6>
+            <strong>{renderPublishedDate(book.publishedDate)}</strong>
+            <strong>{renderPageCount(book.pageCount)}</strong>
+            <p>{book.description}</p>
+            <strong className={`${isSaleClass} ${isExpensivePrice}`}>{`${book.listPrice.amount} ${book.listPrice.currencyCode}`}</strong>
+            <strong>Authors</strong>
+            <ul>
+                {book.authors.map(author =>
+                    <li key={author}>{author}</li>
+                )}
+            </ul>
+            <strong>Categories</strong>
+            <ul>
+                {book.categories.map(category =>
+                    <li key={category}>{category}</li>
+                )}
+            </ul>
+            <strong>Available at {book.language}</strong>
+            <img src={`../assets/img/${book.thumbnail}`} alt="book-image" />
             <button onClick={onBack}>Back</button>
             <section>
-                <button><Link to={`/car/${car.prevCarId}`}>Prev Car</Link></button>
-                <button><Link to={`/car/${car.nextCarId}`}>Next Car</Link></button>
+                <button><Link to={`/book/${book.prevbookId}`}>Prev book</Link></button>
+                <button><Link to={`/book/${book.nextbookId}`}>Next book</Link></button>
             </section>
         </section>
     )

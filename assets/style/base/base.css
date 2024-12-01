@@ -28,9 +28,13 @@ p {
 
 a {
     text-decoration: none;
-    color: unset;
+    color: white;
 }
 
+strong {
+    display: block;
+    margin-bottom: .5rem;
+}
 
 
 /* Dont stretch my Media */
@@ -44,4 +48,12 @@ object {
 /* Simple and useful CSS Debugging Technique */
 .debug * {
     outline: 1px solid gold
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
 }

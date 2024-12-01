@@ -1,10 +1,10 @@
 
-import { carService } from "../services/car.service.js"
+import { BookService } from "../services/book.service.js"
 import { debounce } from "../services/util.service.js"
 
 const { useState, useEffect, useRef } = React
 
-export function CarFilter({ defaultFilter, onSetFilter }) {
+export function BookFilter({ defaultFilter, onSetFilter }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState(defaultFilter)
     const onSetFilterDebounce = useRef(debounce(onSetFilter)).current
@@ -27,12 +27,12 @@ export function CarFilter({ defaultFilter, onSetFilter }) {
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
     }
 
-    // function handleTxtChange(ev) {
-    //     setFilterByToEdit(filter => ({ ...filter, txt: ev.target.value }))
+    // function handletitleChange(ev) {
+    //     setFilterByToEdit(filter => ({ ...filter, title: ev.target.value }))
     // }
 
-    // function handleMinSpeedChange(ev) {
-    //     setFilterByToEdit(filter => ({ ...filter, minSpeed: +ev.target.value }))
+    // function handlepriceChange(ev) {
+    //     setFilterByToEdit(filter => ({ ...filter, price: +ev.target.value }))
     // }
 
     function onSubmitFilter(ev) {
@@ -40,16 +40,16 @@ export function CarFilter({ defaultFilter, onSetFilter }) {
         onSetFilter(filterByToEdit)
     }
 
-    const { txt, minSpeed } = filterByToEdit
+    const { title, price } = filterByToEdit
     return (
-        <section className="car-filter">
-            <h2>Filter Our Cars</h2>
+        <section className="book-filter">
+            <h2>Filter Our Books</h2>
             <form onSubmit={onSubmitFilter}>
-                <label htmlFor="txt">Vendor</label>
-                <input value={txt} onChange={handleChange} type="text" name="txt" id="txt" />
+                <label htmlFor="title">Title</label>
+                <input value={title} onChange={handleChange} type="text" name="title" id="title" />
 
-                <label htmlFor="minSpeed">Min Speed</label>
-                <input value={minSpeed} onChange={handleChange} type="number" name="minSpeed" id="minSpeed" />
+                <label htmlFor="price">Price</label>
+                <input value={price} onChange={handleChange} type="number" name="price" id="price" />
 
                 <button>Submit</button>
             </form>
