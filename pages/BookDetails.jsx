@@ -26,15 +26,6 @@ export function BookDetails() {
         // navigate(-1)
     }
 
-    // console.log('book:', book)
-    console.log('Render');
-
-    if (!book) return <div>Details Loading...</div>
-
-    var isSaleClass = (book.listPrice.isOnSale ? 'sale' : '');
-
-    var isExpensivePrice = (book.listPrice.amount > 150 ? 'red' : 'green');
-
     function renderPageCount(pageCount) {
         if(pageCount > 500) {
             return 'Serious Reading'
@@ -50,6 +41,15 @@ export function BookDetails() {
         }
         return 'New';
     }
+
+    // console.log('book:', book)
+    console.log('Render');
+
+    if (!book) return <div>Details Loading...</div>
+
+    var isSaleClass = (book.listPrice.isOnSale ? 'sale' : '');
+    var isExpensivePrice = (book.listPrice.amount > 150 ? 'red' : 'green');
+
     return (
         <section className="book-details">
             <h1>book title: {book.title}</h1>

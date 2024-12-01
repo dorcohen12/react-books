@@ -20,6 +20,12 @@ async function query(filterBy = {}) {
                 const regExp = new RegExp(filterBy.title, 'i')
                 books = books.filter(book => regExp.test(book.title))
             }
+            if (filterBy.isOnSale) {
+                books = books.filter(book => book.listPrice.isOnSale === filterBy.isOnSale)
+            }
+            if (filterBy.publishedDate) {
+                books = books.filter(book => book.publishedDate === filterBy.publishedDate)
+            }
             if (filterBy.price) {
                 books = books.filter(book => book.listPrice.amount >= filterBy.price)
             }
@@ -50,7 +56,7 @@ function getEmptyBook(title = '', price = '') {
 }
 
 function getDefaultFilter() {
-    return { title: '', price: '' }
+    return { title: '', price: '', isOnSale: '', publishedDate: '' }
 }
 
 
