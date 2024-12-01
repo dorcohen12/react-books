@@ -51,8 +51,29 @@ function save(book) {
     }
 }
 
-function getEmptyBook(title = '', price = '') {
-    return { title, price }
+function getEmptyBook(title = '', price = 50) {
+    const book = {
+        "title": title,
+        "subtitle": "mi est eros convallis auctor arcu dapibus himenaeos",
+        "authors": [
+            "Barbara Cartland"
+        ],
+        "publishedDate": 1999,
+        "description": "placerat nisi sodales suscipit tellus tincidunt mauris elit sit luctus interdum ad dictum platea vehicula conubia fermentum habitasse congue suspendisse",
+        "pageCount": 713,
+        "categories": [
+            "Computers",
+            "Hack"
+        ],
+        "thumbnail": "20.jpg",
+        "language": "en",
+        "listPrice": {
+            "amount": price,
+            "currencyCode": "EUR",
+            "isOnSale": false
+        }
+    }
+    return book
 }
 
 function getDefaultFilter() {
