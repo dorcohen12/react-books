@@ -23,7 +23,7 @@ export function BookPreview({ book }) {
 
     return (
         <article className="book-preview">
-            <img src={`/assets/img/${book.thumbnail}`} alt="thumbnail" />
+            <img src={`assets/img/${book.thumbnail}`} alt="thumbnail" />
             <h2>{book.title} ({renderPublishedDate(book.publishedDate)})</h2>
             <h6>{book.subtitle}</h6>
             <strong>{renderPageCount(book.pageCount)}</strong>

@@ -72,7 +72,7 @@ export function BookDetails() {
                 )}
             </ul>
             <strong>Available at {book.language}</strong>
-            <img src={`../assets/img/${book.thumbnail}`} alt="book-image" />
+            <img src={`assets/img/${book.thumbnail}`} alt="book-image" />
             <button onClick={onBack}>Back</button>
             <section>
                 <button><Link to={`/book/${book.prevbookId}`}>Prev book</Link></button>
