@@ -1,3 +1,4 @@
+import { AddReview } from "../cmps/AddReview.jsx"
 import { LongTxt } from "../cmps/LongTxt.jsx"
 import { BookService } from "../services/book.service.js"
 
@@ -7,11 +8,13 @@ const { useParams, useNavigate, Link } = ReactRouterDOM
 
 export function BookDetails() {
     const [book, setBook] = useState(null)
+    const [reviews, setReviews] = useState(null)
     const params = useParams()
     const navigate = useNavigate()
 
     useEffect(() => {
         loadBook()
+        loadReviews()
     }, [params.bookId])
 
     function loadBook() {
@@ -19,6 +22,14 @@ export function BookDetails() {
             .then(setBook)
             .catch(err => {
                 console.log('Problem getting book', err);
+            })
+    }
+
+    function loadReviews() {
+        BookService.getBookReviews(params.bookId)
+            .then(setReviews)
+            .catch(err => {
+                console.log('Problem getting book reviews', err);
             })
     }
 
@@ -43,6 +54,17 @@ export function BookDetails() {
         return 'New';
     }
 
+    function onDeleteReview(reviewId) {
+        if(!reviewId) return false;
+        BookService.removeReview(reviewId)
+            .then(() => {
+                setReviews(reviews => reviews.filter(review => review.id !== reviewId))
+            })
+            .catch(err => {
+                console.log('Problems removing reviews:', err)
+            })
+    }
+
     // console.log('book:', book)
     console.log('Render');
 
@@ -50,6 +72,8 @@ export function BookDetails() {
 
     var isSaleClass = (book.listPrice.isOnSale ? 'sale' : '');
     var isExpensivePrice = (book.listPrice.amount > 150 ? 'red' : 'green');
+
+    var image = (book.thumbnail.includes('google.com') ? book.thumbnail : `assets/img/${book.thumbnail}`);
 
     return (
         <section className="book-details">
@@ -72,12 +96,26 @@ export function BookDetails() {
                 )}
             </ul>
             <strong>Available at {book.language}</strong>
-            <img src={`assets/img/${book.thumbnail}`} alt="book-image" />
+            <img src={image} alt="book-image" />
+
+            <h1>Book Reviews</h1>
+
+            {reviews.map(review =>
+                <div className="review" key={review.id}>
+                    <h4>{review.fullName} has finished the book at {review.readAt} and rated the book {review.rating} stars!</h4>
+                    <button onClick={() => onDeleteReview(review.id)}>X</button>
+                </div>
+            )}
+
+            <AddReview bookId={params.bookId} />
+
             <button onClick={onBack}>Back</button>
             <section>
                 <button><Link to={`/book/${book.prevbookId}`}>Prev book</Link></button>
                 <button><Link to={`/book/${book.nextbookId}`}>Next book</Link></button>
             </section>
+
         </section>
+        
     )
 }

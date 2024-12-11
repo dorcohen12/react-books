@@ -20,4 +20,7 @@
 @import "cmps/book-filter.css";
 @import "cmps/book-preview.css";
 @import "cmps/not-found.css";
+@import "cmps/user-msg.css";
+@import "cmps/add-review.css";
+@import "cmps/book-add.css";
 

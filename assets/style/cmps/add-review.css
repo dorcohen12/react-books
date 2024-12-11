@@ -1,0 +1,61 @@
+section.add-review form .input-group {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+section.add-review form .input-group label {
+    margin-right: 1rem;
+}
+
+section.add-review form .input-group input {
+    border-radius: 10px;
+    background: white;
+    border: 1px solid #8f8f8f;
+    color: black;
+    transition: 0.2s all ease;
+    box-shadow: 0px 0px 5px #8f8f8f;
+}
+
+.star-wrap {
+    width: max-content;
+    margin: 0 auto;
+    position: relative;
+}
+.star-label.hidden {
+    display: none;
+}
+.star-label {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 4rem;
+}
+@media (min-width: 840px) {
+    .star-label {
+        width: 6rem;
+        height: 6rem;
+    }
+}
+
+.star-shape {
+    background-color: gold;
+    width: 80%;
+    height: 80%;
+    /*star shaped cutout, works  best if it is applied to a square*/
+    /* from Clippy @ https://bennettfeely.com/clippy/ */
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* make stars *after* the checked radio gray*/
+.star:checked + .star-label ~ .star-label .star-shape {
+    background-color: lightgray;
+}
+
+/*hide away the actual radio inputs*/
+.star {
+    position: fixed;
+    opacity: 0;
+    /*top: -90000px;*/
+    left: -90000px;
+}

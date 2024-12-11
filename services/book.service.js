@@ -2,6 +2,8 @@ import { loadFromStorage, makeId, saveToStorage } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
 const BOOK_KEY = 'booksDB'
+const REVIEWS_KEY = 'reviewsDB'
+
 _createBooks()
 
 export const BookService = {
@@ -11,6 +13,10 @@ export const BookService = {
     save,
     getEmptyBook,
     getDefaultFilter,
+    addReview,
+    getBookReviews,
+    removeReview,
+    addGoogleBook
 }
 
 async function query(filterBy = {}) {
@@ -43,12 +49,72 @@ function remove(bookId) {
     return storageService.remove(BOOK_KEY, bookId)
 }
 
+function removeReview(reviewId) {
+    return storageService.remove(REVIEWS_KEY, reviewId)
+}
+
+function addReview(bookId, review) {
+    return storageService.post(REVIEWS_KEY, {bookId, ...review})
+}
+
+async function addGoogleBook(googleBookData) {
+	const bookLocalFormat = MigrateGoogleToLocalFormat(googleBookData);
+    return storageService.post(BOOK_KEY, bookLocalFormat)
+}
+
+function MigrateGoogleToLocalFormat(googleBookData) {
+    const {
+		id,
+		volumeInfo: {
+			title,
+			subtitle = "",
+			authors,
+			publishedDate,
+			description,
+			pageCount,
+			categories,
+			imageLinks: { thumbnail, smallThumbnail },
+			language,
+		},
+    } = googleBookData
+
+    return {
+        id: id,
+		title: title,
+		subtitle: subtitle,
+		authors: authors,
+		publishedDate: publishedDate,
+		description: description,
+		pageCount: pageCount,
+		categories: categories,
+		thumbnail:
+			thumbnail ||
+			smallThumbnail ||
+			`${Math.ceil(Math.random() * 20)}.jpg`,
+		language: language,
+		listPrice: {
+			amount: utilService.getRandomIntInclusive(10, 500),
+			currencyCode: 'ILS',
+			isOnSale: Math.random() > 1,
+		},
+    }
+}
+
+
 function save(book) {
     if (book.id) {
         return storageService.put(BOOK_KEY, book)
     } else {
         return storageService.post(BOOK_KEY, book)
     }
+}
+
+async function getBookReviews(bookId) {
+    return storageService.query(REVIEWS_KEY)
+        .then(reviews => {
+        reviews = reviews.filter(review => review.bookId === bookId)
+        return reviews
+    })
 }
 
 function getEmptyBook(title = '', price = 50) {

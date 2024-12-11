@@ -1,7 +1,7 @@
 import { AppHeader } from "./cmps/AppHeader.jsx"
 import { NotFound } from "./cmps/NotFound.jsx"
 import { About } from "./pages/About.jsx"
-
+import { UserMsg } from "./cmps/UserMsg.jsx"
 import { BookDetails } from "./pages/BookDetails.jsx"
 import { BookEdit } from "./pages/BookEdit.jsx"
 import { BookIndex } from "./pages/BookIndex.jsx"
@@ -31,6 +31,7 @@ export function App() {
                     </Routes>
                 </main>
             </section>
+            <UserMsg />
         </Router>
 
     )

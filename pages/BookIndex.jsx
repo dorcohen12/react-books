@@ -1,4 +1,5 @@
 import { BookFilter } from "../cmps/BookFilter.jsx"
+import { BookAdd } from "../cmps/BookAdd.jsx"
 import { BookList } from "../cmps/BookList.jsx"
 import { BookService } from "../services/book.service.js"
 
@@ -37,6 +38,10 @@ export function BookIndex() {
         // console.log('filterBy:', filterBy)
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
     }
+
+    function onSearchResults(bookResults) {
+        loadBooks()
+    }
     // console.log('index render');
     
     if (!books) return <div>Loading...</div>
@@ -45,6 +50,8 @@ export function BookIndex() {
             
             <section className="add-book">
                 <Link to="/book/edit" className="text-dark">Add Book</Link>
+                <hr/>
+                <BookAdd books={books} onSearchResults={onSearchResults} />
             </section>
 
             <BookFilter defaultFilter={filterBy} onSetFilter={onSetFilter} />
